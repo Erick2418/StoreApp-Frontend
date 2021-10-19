@@ -1,8 +1,8 @@
 <template>
   <div>
     <Carousel />
-<!--     
-    <Product /> -->
+    
+    <Product />
   
   </div>
 </template>
