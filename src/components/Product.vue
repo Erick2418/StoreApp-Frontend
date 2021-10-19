@@ -10,7 +10,7 @@
       <div v-for="item in items" :key="item.indexOf"  >
         
           <v-col cols="12" sm="12" >
-              <v-card :loading="loading" class="mx-auto" max-width="250">
+              <v-card :loading="loading" class="mx-auto" max-width="240">
                 <template slot="progress">
                   <v-progress-linear
                     color="deep-purple"
@@ -19,8 +19,8 @@
                   ></v-progress-linear>
                 </template>
                 <v-img
-                  height="180"
-                  src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                  height="200"
+                 :src="getImgUrl(item.nombre)" v-bind:alt="item.nombre"
                 ></v-img>
                 <v-card-text>
                     <div class="d-flex justify-center">
@@ -101,6 +101,11 @@ export default class Product extends Vue {
   reserve() {
     this.loading = true;
     setTimeout(() => (this.loading = false), 2000);
+  }
+  getImgUrl(index:string){
+      // src="./../assets/img/Chetos.jpg"
+   var images = require.context('../assets/img/', false, /\.jpg$/)
+    return images('./' + index + ".jpg")
   }
 }
 </script>

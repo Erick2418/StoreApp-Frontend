@@ -65,7 +65,7 @@ const actions: ActionTree<ProductsState,any>={
         
         try {
 
-            apiProducts = await axios.get(`https://backend-app-store.herokuapp.com/api/producto/`).then(({data}) => {
+            apiProducts = await axios.get(`http://localhost:${PORT}/api/producto/`).then(({data}) => {
             //   console.log(data);
             
               commit('addProducts',data.producto);

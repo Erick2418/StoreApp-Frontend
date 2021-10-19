@@ -26,7 +26,7 @@
       </v-col>
     </v-row>
 
-
+<!-- 
 <div class="float-right">
 
 
@@ -56,7 +56,7 @@
 
 </div>
 
-
+ -->
 
 
 
