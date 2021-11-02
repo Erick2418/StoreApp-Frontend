@@ -3,8 +3,8 @@ import {GetterTree,MutationTree,ActionTree} from 'vuex';
 import axios from 'axios';
 // import Swal from 'sweetalert2';
 
-type ProductsGetter = GetterTree<ProductsState, any>
-const PORT = "3002";
+type CarproductsGetter = GetterTree<ProductsState, any>
+
 const state: ProductsState = {
 
     products: [],
@@ -17,59 +17,53 @@ const state: ProductsState = {
     }
 }
 
-const getters: ProductsGetter={
+const getters: CarproductsGetter={
 
-    getProducts: state=>state.products,
-    getProduct: state=>state.product,
+    getCarproducts: state=>state.products,
+    getCarproduct: state=>state.product,
 
 }
 
 const mutations: MutationTree<ProductsState>={
 
-    addProducts(state,newProduct){
-        state.products=newProduct;
+    addCarproducts(state,newProduct){
+        state.products=[ state.product, ...state.products];
+        console.log(state.products);
     },
 
-    addProduct(state,newProduct){
+    addCarproduct(state,newProduct){
         state.product=newProduct;        
     }
 }
 
 const actions: ActionTree<ProductsState,any>={
 
-    // async addUsersAsync ({commit}){
+    async addProductCar ({commit},product:Product){
 
-    //     let apiUsuarios;
+        let apiUsuarios;
         
-    //     try {
 
-    //         apiUsuarios = await axios.get('http://localhost:3000/api/user',{
-    //             // headers: {
-    //             //   'x-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6IklzYWJlbEBnbWFpbC5jb20iLCJpYXQiOjE2MjkwNDczNzcsImV4cCI6MTYyOTA1NDU3N30.3Lkth_DB2qk28JDf3fSSLRgGTokssCKwP81hvTqPdk8'
-    //             // }
-    //         }).then(({data}) => {
+        try {
 
-    //             commit('addUsers',data.users);
-    //         });
+           
+                commit('addCarproducts',product);
+          
+        } catch (error) {
+            console.log(error);
+        }
 
+    },
 
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-
-    // },
-
-    async getProductsAsync ({commit}){
+    async getCarproductAsync ({commit},idProducto:number){
             
         let apiProducts;
         
         try {
 
-            apiProducts = await axios.get(`https://backend-app-store.herokuapp.com/api/producto/`).then(({data}) => {
+            apiProducts = await axios.get(`https://backend-app-store.herokuapp.com/api/producto/${idProducto}`).then(({data}) => {
             //  https://backend-app-store.herokuapp.com/api/producto/
-            // http://localhost:3002/api/producto
-            
-              commit('addProducts',data.producto);
+            // http://localhost:3002/api/producto/
+              commit('addCarproduct',data.producto);
             });
 
 
@@ -209,7 +203,7 @@ const actions: ActionTree<ProductsState,any>={
 }
 
 
-export const products = {
+export const carproducts = {
     state,
     getters,
     mutations,

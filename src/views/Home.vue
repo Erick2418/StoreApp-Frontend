@@ -3,7 +3,7 @@
     <Carousel />
     
     <Product />
-  
+
   </div>
 </template>
 
@@ -14,7 +14,7 @@
 
   export default Vue.extend({
     name: 'Home',
-
+   
     components: {
       Product,
       Carousel,
