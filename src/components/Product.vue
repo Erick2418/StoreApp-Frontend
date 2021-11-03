@@ -64,11 +64,13 @@
         </v-col>
       </div>
     </v-row>
+   
     <v-snackbar 
       v-model="snackbar" 
       :multi-line="true" 
       color="success"
-      right shaped top 
+      shaped   
+
     >
       Producto Añadido al carrito!
 
@@ -99,7 +101,7 @@ export default class Product extends Vue {
   @Action addProductCar: any;
   @Getter getCarproduct!: Product[];
   @Getter getCarproducts!: Product[];
-
+  
   //life cycle
   async created() {
     await this.getProductsAsync(); // peticion de get products axios

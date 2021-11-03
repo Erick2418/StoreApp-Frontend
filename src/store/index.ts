@@ -7,12 +7,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    // car:25,
+    drawerCarProduct:false,
+  },
+  getters:{
+    
+    getDraweCarProduct: state=>state.drawerCarProduct,
   },
   mutations: {
-    // addProducts(state){
-    //   state.car++;
-    // },
+    handleDrawerCar(state,payload){
+      state.drawerCarProduct = payload;
+    },
   },
   actions: {
 
@@ -21,4 +25,5 @@ export default new Vuex.Store({
     products,
     carproducts
   }
+  
 })

@@ -20,6 +20,8 @@ const state: ProductsState = {
 const getters: CarproductsGetter={
 
     getCarproducts: state=>state.products,
+    getCarproductsLength: state=>state.products.length,
+    
     getCarproduct: state=>state.product,
 
 }
@@ -28,7 +30,7 @@ const mutations: MutationTree<ProductsState>={
 
     addCarproducts(state,newProduct){
         state.products=[ state.product, ...state.products];
-        console.log(state.products);
+        // console.log(state.products);
     },
 
     addCarproduct(state,newProduct){
@@ -60,7 +62,7 @@ const actions: ActionTree<ProductsState,any>={
         
         try {
 
-            apiProducts = await axios.get(`https://backend-app-store.herokuapp.com/api/producto/${idProducto}`).then(({data}) => {
+            apiProducts = await axios.get(`http://localhost:3002/api/producto/${idProducto}`).then(({data}) => {
             //  https://backend-app-store.herokuapp.com/api/producto/
             // http://localhost:3002/api/producto/
               commit('addCarproduct',data.producto);
