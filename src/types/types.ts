@@ -1,12 +1,9 @@
-// State
-export interface ProductsState{
+export interface ProductsState{ //state
     products:Product[],
     product: Product
 }
-
-// Models
-export interface Product{
- 
+export interface Product{ //model
+    id:number,
     name: string,
     precio: number,
     status: boolean,
@@ -14,6 +11,16 @@ export interface Product{
     descripcion: string,
 }
 
-
-
-
+export interface CarProductsState{ //state
+    carproducts:CarProduct[],
+    carproduct: CarProduct,
+}
+export interface CarProduct{ //model
+    id:number,
+    nombre: string,
+    precio: number,
+    status: boolean,
+    categoriaId: number,
+    descripcion: string,
+    cantidad: number,
+}

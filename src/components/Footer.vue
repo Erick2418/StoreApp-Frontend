@@ -9,7 +9,7 @@
 
           <v-spacer></v-spacer>
 
-          <v-btn v-for="icon in icons" :key="icon" class="mx-4" dark icon>
+          <v-btn v-for="icon in icons" :key="icon" class="mx-4" dark icon href="https://www.linkedin.com/in/erick2418/">
             <v-icon size="24px">
               {{ icon }}
             </v-icon>

@@ -5,7 +5,7 @@
     </div>
 
     <v-row no-gutters>
-      <div v-for="item in items" :key="item.indexOf">
+      <div v-for="item in items" :key="item.id">
         <v-col cols="12" sm="12">
           <v-card :loading="loading" class="mx-auto" max-width="180">
             <template slot="progress">
@@ -64,20 +64,12 @@
         </v-col>
       </div>
     </v-row>
-   
-    <v-snackbar 
-      v-model="snackbar" 
-      :multi-line="true" 
-      color="success"
-      shaped   
 
-    >
+    <v-snackbar v-model="snackbar" :multi-line="true" color="success" shaped>
       Producto Añadido al carrito!
 
       <template v-slot:action="{ attrs }">
-        <v-btn   text v-bind="attrs" @click="snackbar = false">
-          Close
-        </v-btn>
+        <v-btn text v-bind="attrs" @click="snackbar = false"> Close </v-btn>
       </template>
     </v-snackbar>
   </v-container>
@@ -101,12 +93,11 @@ export default class Product extends Vue {
   @Action addProductCar: any;
   @Getter getCarproduct!: Product[];
   @Getter getCarproducts!: Product[];
-  
-  //life cycle
-  async created() {
-    await this.getProductsAsync(); // peticion de get products axios
 
-    this.handleProducts(); // call metdos
+  //life cycle
+  async mounted() {
+    await this.getProductsAsync(); // peticion de get products axios
+    this.items = this.getProducts;
   }
 
   //data
@@ -127,18 +118,11 @@ export default class Product extends Vue {
   }
   async AddToCar(idProducto: string) {
     await this.getCarproductAsync(idProducto); // llamo al producto con su id
-
     this.handleCar(); // aniado el producto al carrito
-  }
-  handleProducts() {
-    this.items = this.getProducts;
   }
   handleCar() {
     this.addProductCar(this.getCarproduct);
-    this.snackbar=true;
-  }
-  algunlado() {
-    console.log("gg");
+    this.snackbar = true;
   }
 }
 </script>

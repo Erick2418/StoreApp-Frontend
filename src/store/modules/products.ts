@@ -9,6 +9,7 @@ const state: ProductsState = {
 
     products: [],
     product:{
+        id:0,
         name: '',
         precio: 0, 
         status: false,

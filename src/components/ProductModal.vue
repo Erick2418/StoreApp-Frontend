@@ -5,42 +5,88 @@
     right
     :style="{ width: sizeScreen < 768 ? '100%' : '270px' }"
   >
-    <v-btn  small block  text color="info" outlined @click="CloseCar">
-      Cerrar 
-    </v-btn>
-    <v-list>
-      <v-list-item v-for="item in getCarproducts" :key="item.id">
-        <v-card class="mx-auto mt-2 mb-2" max-width="344" outlined shaped>
-          <v-list-item three-line @click="onClickOutside">
-            <v-list-item-content>
-              <div class="text-overline">{{ item.nombre }}</div>
-              <v-card-text>
-                <div class="text--primary">{{ item.descripcion }}</div>
-              </v-card-text>
-            </v-list-item-content>
-            <v-list-item-avatar tile size="80">
-              <v-img
-                class="elevation-6"
-                alt=""
-                src="./../assets/img/Chetos.jpg"
-              ></v-img>
-            </v-list-item-avatar>
-          </v-list-item>
-
-          <v-card-actions class="text-center">
-            <v-card-text class="d-inline">
-              <v-btn icon color="info">
-                <v-icon>mdi-plus-circle</v-icon>
-              </v-btn>
-              <v-chip outlined color="green darken-3">1</v-chip>
-              <v-btn icon color="red">
-                <v-icon>mdi-minus-circle</v-icon>
-              </v-btn>
-            </v-card-text>
-          </v-card-actions>
+    <div>
+      <v-card
+        class="d-flex flex-column allheight align-content-space-around"
+        flat
+        tile
+      >
+        <v-card tile>
+          <v-card-title>
+            <v-btn text x-small @click="CloseCar">
+              <v-icon>
+                {{ mdiCloseThick }}
+              </v-icon>
+            </v-btn>
+            &nbsp; &nbsp; Carrito
+          </v-card-title>
+          <v-spacer></v-spacer>
         </v-card>
-      </v-list-item>
-    </v-list>
+
+        <v-card tile>
+          <v-virtual-scroll
+            :items="getCarproducts"
+            :item-height="220"
+            height="500"
+          >
+            <template v-slot:default="{ item }">
+              <v-card class="mt-2 mb-2" width="344" outlined shaped>
+                <v-list-item three-line @click="onClickOutside">
+                  <v-list-item-content>
+                    <div class="text-overline">{{ item.nombre }}</div>
+                    <v-card-text>
+                      <div class="text--primary">{{ item.descripcion }}</div>
+                    </v-card-text>
+                  </v-list-item-content>
+                  <v-list-item-avatar tile size="80">
+                    <v-img
+                      class="elevation-6"
+                      :src="getImgUrl(item.nombre)"
+                      v-bind:alt="item.nombre"
+                    ></v-img>
+                  </v-list-item-avatar>
+                </v-list-item>
+
+                <v-card-actions class="text-center">
+                  <v-card-text class="d-inline">
+                    <v-btn
+                      icon
+                      color="info"
+                      @click="operacionProducto(item.id, 'Suma')"
+                    >
+                      <v-icon>mdi-plus-circle</v-icon>
+                    </v-btn>
+                    <v-chip outlined color="green darken-3">{{
+                      item.cantidad
+                    }}</v-chip>
+                    <v-btn
+                      icon
+                      color="red"
+                      @click="operacionProducto(item.id, 'Resta')"
+                    >
+                      <v-icon>mdi-minus-circle</v-icon>
+                    </v-btn>
+                  </v-card-text>
+                </v-card-actions>
+              </v-card>
+            </template>
+          </v-virtual-scroll>
+        </v-card>
+        <v-card class="mt-auto pa-2" tile>
+          <v-card-text elevation="0" shaped>
+            *iva incluido
+            <h3>
+              Subtotal: <strong>${{ subtotal }}</strong>
+            </h3>
+            <h2>
+              Total: <strong>${{ subtotal }}</strong>
+            </h2>
+          </v-card-text>
+          <br />
+          <v-btn block color="success">Cerrar Pedido</v-btn>
+        </v-card>
+      </v-card>
+    </div>
   </v-navigation-drawer>
 </template>
 
@@ -48,20 +94,25 @@
 import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
 import { Getter, Mutation } from "vuex-class";
+import { mdiCloseThick } from "@mdi/js";
 
 @Component
-export default class Product extends Vue {
+export default class CarProduct extends Vue {
   //vuex
-  @Getter getCarproductsLength!: Product[];
-  @Getter getCarproducts!: Product[];
+  @Getter getCarproductsLength!: CarProduct[];
+  @Getter getCarproducts!: CarProduct[];
   @Getter getDraweCarProduct!: boolean;
-  @Mutation handleDrawerCar!: any;
 
+  @Mutation handleDrawerCar!: any;
+  @Mutation operacionesProductoCar!: any;
+
+  //icons
+  mdiCloseThick: any = mdiCloseThick;
   //data
   producto: any;
   numberCar: number = 0;
   valWidth: string = "100%";
-
+  subtotal: string = "0";
   //props computeds
   get counter(): boolean {
     return this.getDraweCarProduct;
@@ -72,20 +123,43 @@ export default class Product extends Vue {
     return w;
   }
   set sizeScreen(val: number) {}
+
   //life cicle
-  // @Watch("getCarproductsLength")
-  // onProductCarChanged(val: number, oldVal: number) {
-  //   console.log(`watch carlength val: ${val} . Oldval: ${oldVal}`);
-  // }
+  @Watch("getCarproducts")
+  onProductCarChanged(val: number, oldVal: number) {
+    let costo: number = 0;
+    let cantidad: number = 0;
+    let costoAcum: number = 0;
+    this.getCarproducts.map((producto: any) => {
+      // extraemos la cantidad de productos y lo multiplicamos por el precio
+      cantidad = Number(producto.cantidad);
+      costo = Number(producto.precio) * cantidad;
+      costoAcum += costo;
+    });
+    this.subtotal = costoAcum.toFixed(2);
+  }
 
   //methods
-
+  getImgUrl(index: string) {
+    var images = require.context("../assets/img/", false, /\.jpg$/);
+    return images("./" + index + ".jpg");
+  }
   CloseCar() {
     this.handleDrawerCar(false);
   }
+  onClickOutside() {}
 
-  onClickOutside() {
-    // this.handleDrawerCar(false);
+  operacionProducto(idProducto: number, operacion: string) {
+    let productoIdOp = {
+      id: idProducto,
+      operacion,
+    };
+    this.operacionesProductoCar(productoIdOp);
   }
 }
 </script>
+<style>
+.allheight {
+  height: 100vh;
+}
+</style>
