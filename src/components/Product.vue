@@ -1,5 +1,5 @@
 <template>
-  <v-container class="grey lighten-5">
+  <v-container class="grey lighten-5 "  >
     <div class="d-flex justify-center mb-2 mt-2">
       <h2>MEJORES OFERTAS</h2>
     </div>
@@ -131,4 +131,6 @@ export default class Product extends Vue {
   background-color: rgba(#FFF, 0.8)
   >.v-card__text
     color: #000
+
+ 
 </style>

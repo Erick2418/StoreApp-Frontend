@@ -28,6 +28,7 @@
             :items="getCarproducts"
             :item-height="220"
             height="500"
+            class="scrolldesing"
           >
             <template v-slot:default="{ item }">
               <v-card class="mt-2 mb-2" width="344" outlined shaped>
@@ -162,4 +163,14 @@ export default class CarProduct extends Vue {
 .allheight {
   height: 100vh;
 }
+
+.scrolldesing::-webkit-scrollbar {
+  width: 10px;
+  background:rgb(255, 255, 255);
+}
+.scrolldesing::-webkit-scrollbar-thumb {
+  background: #fc9d80; 
+  border-radius: 10px;
+  border-right: 2px solid rgba(255, 255, 255, 0);
+}   
 </style>

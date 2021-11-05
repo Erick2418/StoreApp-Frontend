@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { carproducts } from './modules/carproducts'
 import { products } from './modules/products'
-
+import VuexPersistence from 'vuex-persist'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -24,6 +24,11 @@ export default new Vuex.Store({
   modules: {
     products,
     carproducts
-  }
+  },
+  plugins:[
+    new VuexPersistence({
+      storage: window.localStorage
+    }).plugin    
+  ]
   
 })
