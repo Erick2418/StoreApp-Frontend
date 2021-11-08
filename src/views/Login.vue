@@ -1,5 +1,6 @@
 <template>
   <v-container class="">
+    Soy el login
     <div class="d-flex flex-column justify-center align-center mb-6 ma-5 pa-2">
       <LoginForm/>
     </div>
