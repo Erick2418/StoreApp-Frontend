@@ -1,5 +1,10 @@
 # storeapp
 
+## Link de la app en Heroku
+```
+https://storeapp-vue.herokuapp.com/
+```
+
 ## Project setup
 ```
 npm install
