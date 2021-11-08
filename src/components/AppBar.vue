@@ -66,7 +66,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 import { Getter, Mutation } from "vuex-class";
 import { mdiCartOutline, mdiAccount, mdiPhone } from "@mdi/js";
 
@@ -104,6 +104,12 @@ export default class Product extends Vue {
       this.handleDrawerCar(true);
     } else {
       this.snackbar = true;
+    }
+  }
+   @Watch("getCarproducts")
+  onProductCarChanged(val: number, oldVal: number) {
+    if(this.getCarproductsLength==0){
+       this.handleDrawerCar(false);
     }
   }
   //vuex

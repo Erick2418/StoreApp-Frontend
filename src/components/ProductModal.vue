@@ -128,6 +128,9 @@ export default class CarProduct extends Vue {
   //life cicle
   @Watch("getCarproducts")
   onProductCarChanged(val: number, oldVal: number) {
+    if(this.getCarproducts.length==0){
+       this.handleDrawerCar(false);
+    }
     let costo: number = 0;
     let cantidad: number = 0;
     let costoAcum: number = 0;

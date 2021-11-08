@@ -1,3 +1,15 @@
+// User-Client
+export interface AuthState{ //state
+    authUsuario: Auth
+}
+export interface Auth{ //model
+    id:number,
+    nombre:string,
+    email: string,
+    token: string,
+}
+
+// Products
 export interface ProductsState{ //state
     products:Product[],
     product: Product
@@ -10,7 +22,7 @@ export interface Product{ //model
     categoriaId: number,
     descripcion: string,
 }
-
+// Car Products
 export interface CarProductsState{ //state
     carproducts:CarProduct[],
     carproduct: CarProduct,
