@@ -36,3 +36,26 @@ export interface CarProduct{ //model
     descripcion: string,
     cantidad: number,
 }
+
+// Venta
+export interface VentaState{ //state
+    venta: Venta
+}
+export interface Venta{ //model
+    id:number,
+    fecha: string,
+    usuarioId: number,
+}
+// Detalle Venta
+export interface DetalleVentaState{ //state
+    detalleVentas:DetalleVenta[],
+    detalleVenta: DetalleVenta,
+}
+export interface DetalleVenta{ //model
+    id: number,
+    cantidad:number,
+    precio: number,
+    subtotal: number,
+    productoId: number,
+    ventaId: number,
+}

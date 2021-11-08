@@ -12,12 +12,12 @@ const state: CarProductsState = {
         id:0,
         nombre: '',
         precio: 0, 
-        status: false,
+        status: false, 
         categoriaId: 0,
         descripcion: '', 
         cantidad:0,
     }
-}
+} 
 
 const getters: CarproductsGetter={
 
@@ -99,7 +99,7 @@ const actions: ActionTree<CarProductsState,any>={
         let apiProducts;
         let productoCarrito:CarProduct;
         try {
-            apiProducts = await axios.get(`http://localhost:3002/api/producto/${idProducto}`).then(({data}) => {
+            apiProducts = await axios.get(`https://backend-app-store.herokuapp.com/api/producto/${idProducto}`).then(({data}) => {
             //  https://backend-app-store.herokuapp.com/api/producto/
             // http://localhost:3002/api/producto/
                 // console.log(data.producto);

@@ -33,7 +33,7 @@ const actions: ActionTree<AuthState,any>={
     
         try {
 
-            apiAuth = await axios.post(`http://localhost:3002/api/login`,
+            apiAuth = await axios.post(`https://backend-app-store.herokuapp.com/api/login`,
                 data
                 ).then(({data}) =>{
 
