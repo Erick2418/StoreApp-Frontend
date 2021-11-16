@@ -84,7 +84,9 @@
             </h2>
           </v-card-text>
           <br />
-          <v-btn block color="success">Cerrar Pedido</v-btn>
+          <v-btn block color="success" @click="realizarPedido()"
+            >Cerrar Pedido</v-btn
+          >
         </v-card>
       </v-card>
     </div>
@@ -94,18 +96,23 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
-import { Getter, Mutation } from "vuex-class";
+import { Action, Getter, Mutation } from "vuex-class";
 import { mdiCloseThick } from "@mdi/js";
+import { Auth } from "@/types/types";
+import Product from "./AppBar.vue";
 
 @Component
 export default class CarProduct extends Vue {
   //vuex
   @Getter getCarproductsLength!: CarProduct[];
   @Getter getCarproducts!: CarProduct[];
+  @Getter getAuth!: Auth;
+  
   @Getter getDraweCarProduct!: boolean;
 
   @Mutation handleDrawerCar!: any;
   @Mutation operacionesProductoCar!: any;
+  @Action addUFacturaAsync!: any;
 
   //icons
   mdiCloseThick: any = mdiCloseThick;
@@ -128,8 +135,8 @@ export default class CarProduct extends Vue {
   //life cicle
   @Watch("getCarproducts")
   onProductCarChanged(val: number, oldVal: number) {
-    if(this.getCarproducts.length==0){
-       this.handleDrawerCar(false);
+    if (this.getCarproducts.length == 0) {
+      this.handleDrawerCar(false);
     }
     let costo: number = 0;
     let cantidad: number = 0;
@@ -160,6 +167,21 @@ export default class CarProduct extends Vue {
     };
     this.operacionesProductoCar(productoIdOp);
   }
+  realizarPedido() {
+    let productos: CarProduct[] = this.getCarproducts;
+    let usuario:Auth =  this.getAuth;
+
+    var hoy = new Date();
+    var fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear();
+    let data = {
+        venta:{
+          fecha,
+          usuarioId:usuario.id
+        },
+        productos
+    }
+    this.addUFacturaAsync(data);
+  }
 }
 </script>
 <style>
@@ -169,11 +191,11 @@ export default class CarProduct extends Vue {
 
 .scrolldesing::-webkit-scrollbar {
   width: 10px;
-  background:rgb(255, 255, 255);
+  background: rgb(255, 255, 255);
 }
 .scrolldesing::-webkit-scrollbar-thumb {
-  background: #fc9d80; 
+  background: #fc9d80;
   border-radius: 10px;
   border-right: 2px solid rgba(255, 255, 255, 0);
-}   
+}
 </style>

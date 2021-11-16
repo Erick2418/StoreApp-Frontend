@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { carproducts } from './modules/carproducts'
 import { products } from './modules/products'
 import { auth } from './modules/auth'
+import { venta } from './modules/venta'
 
 import VuexPersistence from 'vuex-persist'
 Vue.use(Vuex)
@@ -26,7 +27,8 @@ export default new Vuex.Store({
   modules: {
     products,
     carproducts,
-    auth
+    auth,
+    venta
   },
   plugins:[
     new VuexPersistence({
